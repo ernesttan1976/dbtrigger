@@ -5,13 +5,21 @@ const createPostgresSubscriber = require('pg-listen');
 const app = express();
 const port = 3001;
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const redirectUri = String(
+  process.env.SGID_REDIRECT_URI ?? `http://localhost:${PORT}/auth/redirect`
+);
+
 // Create a new listener instance
 const listener = createPostgresSubscriber({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'spot',
-    password: 'raid2024',
-    port: 5432,
+    user: process.env.USER,
+    host: process.env.HOST,
+    database: process.env.DATABASE,
+    password: process.env.PASSWORD,
+    port: process.env.PORT,
   });
   
   // Listen for PostgreSQL notifications
